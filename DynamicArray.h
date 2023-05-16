@@ -5,18 +5,19 @@
 #define ROBOTO "SFML-2.5.1\\examples\\shader\\resources\\Roboto-Regular.ttf"
 #define ROBOTO_BOLD "SFML-2.5.1\\examples\\shader\\resources\\Roboto-Bold.ttf"
 
-#ifndef _StaticArray_h_
-#define _StaticArray_h_
+#ifndef _DynamicArray_h_
+#define _DynamicArray_h_
 
-class StaticArray
+class DynamicArray
 {
 public:
-    StaticArray(int n);
-    ~StaticArray();
+    DynamicArray(int n);
+    ~DynamicArray();
 
     int getSize();
+    void clear();
     void randomInit();
-    void userDefineInit(int n, int a[]);
+    void userDefineInit(int n, int *a);
     void addValueAtPosition(int pos, int x, sf::RenderWindow &window);
     void deleteValueAtPosition(int pos, sf::RenderWindow &window);
     void updateValueAtPosition(int pos, int x, sf::RenderWindow &window);
@@ -29,8 +30,8 @@ private:
     int maxArrSize = 10;
     sf::Font textFont, indexFont;
     sf::Text arrName;
-    sf::RectangleShape nodeShape[10];
-    sf::Text nodeIndex[10], nodeData[10];
+    sf::RectangleShape *nodeShape;
+    sf::Text *nodeIndex, *nodeData;
 
     std::string toString(int n)
     {
@@ -50,7 +51,7 @@ private:
         return n;
     }
 
-    void createArray()
+    void createArray(int n, int *a)
     {
         textFont.loadFromFile(ROBOTO);
         indexFont.loadFromFile(ROBOTO_BOLD);
@@ -65,7 +66,12 @@ private:
         arrName.setFillColor(sf::Color::Black);
         arrName.setPosition({nodePos.x - 150, nodePos.y + 25});
 
-        for (int i = 0; i < maxArrSize; i++)
+        arrSize = n;
+        nodeShape = new sf::RectangleShape[arrSize];
+        nodeData = new sf::Text[arrSize];
+        nodeIndex = new sf::Text[arrSize];
+
+        for (int i = 0; i < arrSize; i++)
         {
             sf::RectangleShape rect;
             rect.setSize(nodeSize);
@@ -81,6 +87,9 @@ private:
             text.setString("");
             text.setCharacterSize(charSize);
             text.setFillColor(sf::Color::Black);
+            std::string d = toString(a[i]);
+            text.setString(d);
+            text.setPosition({nodePos.x + (d.size() == 1 ? 45 : 38), nodePos.y + 32});
 
             nodeData[i] = text;
 

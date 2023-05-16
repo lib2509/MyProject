@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "StaticArray.h"
+#include "DynamicArray.h"
+
 #ifndef _Control_Menu_h_
 #define _Control_Menu_h
 
@@ -15,15 +17,9 @@ int staticArrayMenu(sf::RenderWindow &window, StaticArray &a);
 
 int staticArrayInitMenu(sf::RenderWindow &window, StaticArray &a);
 
-int staticArrayAddMenu(sf::RenderWindow &window, StaticArray &a);
+int dynamicArrayMenu(sf::RenderWindow &window, DynamicArray &a);
 
-int staticArrayDeleteMenu(sf::RenderWindow &window, StaticArray &a);
-
-int staticArrayUpdateMenu(sf::RenderWindow &window, StaticArray &a);
-
-int staticArraySearchMenu(sf::RenderWindow &window, StaticArray &a);
-
-int dynamicArrayMenu(sf::RenderWindow &window);
+int dynamicArrayInitMenu(sf::RenderWindow &window, DynamicArray &a);
 
 int sllMenu(sf::RenderWindow &window);
 
@@ -57,7 +53,19 @@ void runStaticArrayUpdateMenu(sf::RenderWindow &window, StaticArray &a);
 
 void runStaticArraySearchMenu(sf::RenderWindow &window, StaticArray &a);
 
-void runDynamicArrayMenu(sf::RenderWindow &window);
+void runDynamicArrayMenu(sf::RenderWindow &window, DynamicArray &a);
+
+void runDynamicArrayInitMenu(sf::RenderWindow &window, DynamicArray &a);
+
+void runDynamicArrayInitUserDefineMenu(sf::RenderWindow &window, DynamicArray &a);
+
+void runDynamicArrayAddMenu(sf::RenderWindow &window, DynamicArray &a);
+
+void runDynamicArrayDeleteMenu(sf::RenderWindow &window, DynamicArray &a);
+
+void runDynamicArrayUpdateMenu(sf::RenderWindow &window, DynamicArray &a);
+
+void runDynamicArraySearchMenu(sf::RenderWindow &window, DynamicArray &a);
 
 void runSLLMenu(sf::RenderWindow &window);
 

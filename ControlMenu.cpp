@@ -5,6 +5,7 @@
 #include "TextBox.h"
 #include "Button.h"
 #include "StaticArray.h"
+#include "DynamicArray.h"
 #include <string>
 #include <sstream>
 #include <windows.h>
@@ -452,31 +453,7 @@ int staticArrayInitMenu(sf::RenderWindow &window, StaticArray &a)
     return -1;
 }
 
-int staticArrayAddMenu(sf::RenderWindow &window, StaticArray &a)
-{
-
-    return -1;
-}
-
-int staticArrayDeleteMenu(sf::RenderWindow &window, StaticArray &a)
-{
-
-    return -1;
-}
-
-int staticArrayUpdateMenu(sf::RenderWindow &window, StaticArray &a)
-{
-
-    return -1;
-}
-
-int staticArraySearchMenu(sf::RenderWindow &window, StaticArray &a)
-{
-
-    return -1;
-}
-
-int dynamicArrayMenu(sf::RenderWindow &window)
+int dynamicArrayMenu(sf::RenderWindow &window, DynamicArray &a)
 {
     float wx = window.getSize().x, wy = window.getSize().y;
 
@@ -511,11 +488,6 @@ int dynamicArrayMenu(sf::RenderWindow &window)
     sf::Vector2f searchButtonPos = {100, 825};
     searchButton.setPosition(searchButtonPos, 4, 4);
     searchButton.setFont(buttonFont);
-
-    // Button runTypeButton("Run type", 24, {150, 50}, sf::Color::Green, sf::Color::White);
-    // sf::Vector2f runTypeButtonPos = {100, 725};
-    // runTypeButton.setPosition(runTypeButtonPos, 5.25, 4);
-    // runTypeButton.setFont(buttonFont);
 
     Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
     sf::Vector2f backButtonPos = {100, 900};
@@ -562,11 +534,6 @@ int dynamicArrayMenu(sf::RenderWindow &window)
                 else
                     searchButton.setFillColor(sf::Color::Green);
 
-                // if (runTypeButton.isMouseOver(window))
-                //     runTypeButton.setFillColor(sf::Color(163, 239, 247, 255));
-                // else
-                //     runTypeButton.setFillColor(sf::Color::Green);
-
                 if (backButton.isMouseOver(window))
                     backButton.setFillColor(sf::Color(163, 239, 247, 255));
                 else
@@ -577,28 +544,28 @@ int dynamicArrayMenu(sf::RenderWindow &window)
             {
                 if (initButton.isMouseOver(window))
                 {
+                    runDynamicArrayInitMenu(window, a);
                 }
 
                 if (addButton.isMouseOver(window))
                 {
+                    runDynamicArrayAddMenu(window, a);
                 }
 
                 if (deleteButton.isMouseOver(window))
                 {
+                    runDynamicArrayDeleteMenu(window, a);
                 }
 
                 if (updateButton.isMouseOver(window))
                 {
+                    runDynamicArrayUpdateMenu(window, a);
                 }
 
                 if (searchButton.isMouseOver(window))
                 {
+                    runDynamicArraySearchMenu(window, a);
                 }
-
-                // if (runTypeButton.isMouseOver(window))
-                // {
-
-                // }
 
                 if (backButton.isMouseOver(window))
                 {
@@ -615,10 +582,102 @@ int dynamicArrayMenu(sf::RenderWindow &window)
         deleteButton.draw(window);
         updateButton.draw(window);
         searchButton.draw(window);
-        // runTypeButton.draw(window);
         backButton.draw(window);
         header.draw(window);
         author.draw(window);
+        a.draw(window);
+        window.display();
+    }
+    return -1;
+}
+
+int dynamicArrayInitMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    sf::Font textBoxFont, buttonFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    buttonFont.loadFromFile(ROBOTO_BOLD);
+
+    Header header(wx, wy, "Dynamic Array", 3.25, 20);
+    Author author(wx, wy);
+
+    Button randomButton("Random", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f randomButtonPos = {100, 525};
+    randomButton.setPosition(randomButtonPos, 5, 4);
+    randomButton.setFont(buttonFont);
+
+    Button userDefineButton("User Define", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f userDefineButtonPos = {100, 600};
+    userDefineButton.setPosition(userDefineButtonPos, 11.5, 4);
+    userDefineButton.setFont(buttonFont);
+
+    Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f backButtonPos = {100, 675};
+    backButton.setPosition(backButtonPos, 3.25, 4);
+    backButton.setFont(buttonFont);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::MouseMoved:
+            {
+                if (randomButton.isMouseOver(window))
+                    randomButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    randomButton.setFillColor(sf::Color::Green);
+
+                if (userDefineButton.isMouseOver(window))
+                    userDefineButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    userDefineButton.setFillColor(sf::Color::Green);
+
+                if (backButton.isMouseOver(window))
+                    backButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    backButton.setFillColor(sf::Color::Green);
+
+                break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (randomButton.isMouseOver(window))
+                {
+                    a.randomInit();
+                }
+
+                if (userDefineButton.isMouseOver(window))
+                {
+                    runDynamicArrayInitUserDefineMenu(window, a);
+                }
+
+                if (backButton.isMouseOver(window))
+                {
+                    return 0;
+                }
+
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        randomButton.draw(window);
+        userDefineButton.draw(window);
+        backButton.draw(window);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
         window.display();
     }
     return -1;
@@ -1352,7 +1411,8 @@ void runArrayMenu(sf::RenderWindow &window)
     }
     case 1:
     {
-        runDynamicArrayMenu(window);
+        DynamicArray a(0);
+        runDynamicArrayMenu(window, a);
         break;
     }
     default:
@@ -1398,14 +1458,7 @@ void runLLMenu(sf::RenderWindow &window)
 void runStaticArrayMenu(sf::RenderWindow &window, StaticArray &a)
 {
     int k = staticArrayMenu(window, a);
-    switch (k)
-    {
-    case 1:
-    case 2:
-
-    default:
-        runArrayMenu(window);
-    }
+    runArrayMenu(window);
 }
 
 void runStaticArrayInitMenu(sf::RenderWindow &window, StaticArray &a)
@@ -1869,16 +1922,492 @@ void runStaticArraySearchMenu(sf::RenderWindow &window, StaticArray &a)
     }
 }
 
-void runDynamicArrayMenu(sf::RenderWindow &window)
+void runDynamicArrayMenu(sf::RenderWindow &window, DynamicArray &a)
 {
-    int k = dynamicArrayMenu(window);
-    switch (k)
-    {
-    case 1:
-    case 2:
+    int k = dynamicArrayMenu(window, a);
+    runArrayMenu(window);
+}
 
-    default:
-        runArrayMenu(window);
+void runDynamicArrayInitMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    int k = dynamicArrayInitMenu(window, a);
+    runDynamicArrayMenu(window, a);
+}
+
+void runDynamicArrayInitUserDefineMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Dynamic Array", 3.25, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    message.setString("Input array size (integer number from 0 to 10): ");
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {615, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int n = 0, i = 0;
+    int *b = nullptr;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (n == 0)
+            {
+                n = toNumber(initTextBox.getText());
+                if (n == 0 || n > 10)
+                {
+                    if (n == 0)
+                        a.userDefineInit(n, b);
+                    return;
+                }
+                b = new int[n];
+            }
+            else
+            {
+                b[i++] = toNumber((initTextBox.getText() == "" ? "0" : initTextBox.getText()));
+                if (i >= n)
+                {
+                    a.userDefineInit(n, b);
+                    delete[] b;
+
+                    return;
+                }
+            }
+            std::string tmp = "Input MyArray[";
+            tmp += toString(i);
+            tmp += "]:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {295, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        initTextBox.draw(window);
+        window.display();
+    }
+}
+
+void runDynamicArrayAddMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Dynamic Array", 3.25, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize());
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    sf::Text newArrName;
+    newArrName.setString("NewArray");
+    newArrName.setFont(messageFont);
+    newArrName.setCharacterSize(30);
+    newArrName.setFillColor(sf::Color::Black);
+    newArrName.setPosition({150, 585});
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 10)
+        {
+            message.setString("MyArray has reached limit");
+        }
+        else if (a.getSize() == 0)
+        {
+            message.setString("MyArray is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos > a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.addValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (a.getSize() < 10 && 0 < a.getSize())
+            initTextBox.draw(window);
+        if (pos != 10)
+            window.draw(newArrName);
+        window.display();
+
+        if (a.getSize() == 10 || a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDynamicArrayDeleteMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Dynamic Array", 3.25, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    sf::Text newArrName;
+    newArrName.setString("NewArray");
+    newArrName.setFont(messageFont);
+    newArrName.setCharacterSize(30);
+    newArrName.setFillColor(sf::Color::Black);
+    newArrName.setPosition({150, 585});
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyArray is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                a.deleteValueAtPosition(pos, window);
+
+                return;
+            }
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+        {
+            initTextBox.draw(window);
+            window.draw(newArrName);
+        }
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDynamicArrayUpdateMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Dynamic Array", 3.25, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyArray is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.updateValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDynamicArraySearchMenu(sf::RenderWindow &window, DynamicArray &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Dynamic Array", 3.25, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input value:";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {230, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyArray is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            x = toNumber(initTextBox.getText());
+            a.searchValue(x, window);
+
+            return;
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
     }
 }
 

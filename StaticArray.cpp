@@ -11,7 +11,6 @@ StaticArray::StaticArray(int n)
 
 StaticArray::~StaticArray()
 {
-    
 }
 
 int StaticArray::getSize()
@@ -29,7 +28,7 @@ void StaticArray::randomInit()
         int x = rand() % 100;
         sf::Vector2f nodePos = nodeShape[i].getPosition();
         std::string d = toString(x);
-        
+
         nodeData[i].setString(d);
         nodeData[i].setPosition({nodePos.x + (d.size() == 1 ? 45 : 38), nodePos.y + 32});
     }
@@ -40,7 +39,7 @@ void StaticArray::randomInit()
 void StaticArray::userDefineInit(int n, int a[])
 {
     arrSize = n;
-    
+
     for (int i = 0; i < arrSize; i++)
     {
         sf::Vector2f nodePos = nodeShape[i].getPosition();
@@ -49,7 +48,7 @@ void StaticArray::userDefineInit(int n, int a[])
         nodeData[i].setString(d);
         nodeData[i].setPosition({nodePos.x + (d.size() == 1 ? 45 : 38), nodePos.y + 32});
     }
-    
+
     for (int i = arrSize; i < maxArrSize; i++)
         nodeData[i].setString("");
 }
@@ -58,24 +57,26 @@ void StaticArray::addValueAtPosition(int pos, int x, sf::RenderWindow &window)
 {
     nodeShape[pos].setFillColor(sf::Color::Red);
     nodeData[pos].setFillColor(sf::Color::White);
-    
+
     drawNode(pos, window);
     window.display();
     Sleep(250);
-    
+
     for (int i = arrSize - 1; i >= pos; i--)
     {
         nodeShape[i].setFillColor(sf::Color::Green);
         nodeData[i].setFillColor(sf::Color::White);
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j <= arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
         nodeShape[i + 1].setFillColor(sf::Color::Blue);
         nodeData[i + 1].setFillColor(sf::Color::White);
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j <= arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
@@ -84,8 +85,9 @@ void StaticArray::addValueAtPosition(int pos, int x, sf::RenderWindow &window)
         nodeData[i + 1].setPosition({nodeShape[i + 1].getPosition().x + (d.size() == 1 ? 45 : 38), nodeShape[i + 1].getPosition().y + 32});
 
         nodeData[i].setString("");
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j <= arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
@@ -95,7 +97,8 @@ void StaticArray::addValueAtPosition(int pos, int x, sf::RenderWindow &window)
         nodeShape[i].setFillColor(sf::Color::White);
         nodeData[i].setFillColor(sf::Color::Black);
 
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+        for (int j = 0; j <= arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
     }
@@ -106,7 +109,8 @@ void StaticArray::addValueAtPosition(int pos, int x, sf::RenderWindow &window)
     nodeData[pos].setString(d);
     nodeData[pos].setPosition({nodeShape[pos].getPosition().x + (d.size() == 1 ? 45 : 38), nodeShape[pos].getPosition().y + 32});
 
-    for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+    for (int j = 0; j <= arrSize; j++)
+        drawNode(j, window);
     window.display();
     Sleep(250);
 
@@ -123,7 +127,7 @@ void StaticArray::deleteValueAtPosition(int pos, sf::RenderWindow &window)
     drawNode(pos, window);
     window.display();
     Sleep(250);
-    
+
     nodeData[pos].setString("");
     drawNode(pos, window);
     window.display();
@@ -133,15 +137,17 @@ void StaticArray::deleteValueAtPosition(int pos, sf::RenderWindow &window)
     {
         nodeShape[i].setFillColor(sf::Color::Green);
         nodeData[i].setFillColor(sf::Color::White);
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j < arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
         nodeShape[i - 1].setFillColor(sf::Color::Blue);
         nodeData[i - 1].setFillColor(sf::Color::White);
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j < arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
@@ -150,8 +156,9 @@ void StaticArray::deleteValueAtPosition(int pos, sf::RenderWindow &window)
         nodeData[i - 1].setPosition({nodeShape[i - 1].getPosition().x + (d.size() == 1 ? 45 : 38), nodeShape[i - 1].getPosition().y + 32});
 
         nodeData[i].setString("");
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j < arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
@@ -161,7 +168,8 @@ void StaticArray::deleteValueAtPosition(int pos, sf::RenderWindow &window)
         nodeShape[i].setFillColor(sf::Color::White);
         nodeData[i].setFillColor(sf::Color::Black);
 
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+        for (int j = 0; j < arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
     }
@@ -179,7 +187,7 @@ void StaticArray::updateValueAtPosition(int pos, int x, sf::RenderWindow &window
     drawNode(pos, window);
     window.display();
     Sleep(250);
-    
+
     std::string d = toString(x);
     nodeData[pos].setString(d);
     nodeData[pos].setPosition({nodeShape[pos].getPosition().x + (d.size() == 1 ? 45 : 38), nodeShape[pos].getPosition().y + 32});
@@ -197,8 +205,9 @@ bool StaticArray::searchValue(int x, sf::RenderWindow &window)
     {
         nodeShape[i].setFillColor(sf::Color::Red);
         nodeData[i].setFillColor(sf::Color::White);
-        
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+
+        for (int j = 0; j < arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
 
@@ -206,20 +215,22 @@ bool StaticArray::searchValue(int x, sf::RenderWindow &window)
         if (toNumber(d) == x)
         {
             nodeShape[i].setFillColor(sf::Color::Green);
-            for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+            for (int j = 0; j < arrSize; j++)
+                drawNode(j, window);
             window.display();
             Sleep(2000);
 
             nodeShape[i].setFillColor(sf::Color::White);
             nodeData[i].setFillColor(sf::Color::Black);
-            
+
             return true;
         }
 
         nodeShape[i].setFillColor(sf::Color::White);
         nodeData[i].setFillColor(sf::Color::Black);
 
-        for (int j = 0; j <= arrSize; j++) drawNode(j, window);
+        for (int j = 0; j < arrSize; j++)
+            drawNode(j, window);
         window.display();
         Sleep(250);
     }
