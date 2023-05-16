@@ -15,6 +15,7 @@ public:
     void setPosition(sf::Vector2f &pos);
     void setLimit(bool f, int l);
     void setSelected(bool sel);
+    void clear();
     std::string getText();
     void draw(sf::RenderWindow &window);
     void typedOn(sf::Event input);

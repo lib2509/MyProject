@@ -44,6 +44,13 @@ void TextBox::setSelected(bool sel)
     }
 }
 
+void TextBox::clear()
+{
+    while (text.str().size())
+        deleteLastChar();
+    textBox.setString((isSelected ? "_" : ""));
+}
+
 std::string TextBox::getText()
 {
     return text.str();
