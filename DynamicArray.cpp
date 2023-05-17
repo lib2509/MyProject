@@ -394,6 +394,7 @@ bool DynamicArray::searchValue(int x, sf::RenderWindow &window)
     }
     return false;
 }
+
 void DynamicArray::drawNode(int i, sf::RenderWindow &window)
 {
     window.draw(nodeShape[i]);

@@ -6,6 +6,10 @@
 #include "Button.h"
 #include "StaticArray.h"
 #include "DynamicArray.h"
+#include "SLL.h"
+#include "DLL.h"
+#include "CLL.h"
+#include "Stack.h"
 #include <string>
 #include <sstream>
 #include <windows.h>
@@ -683,7 +687,7 @@ int dynamicArrayInitMenu(sf::RenderWindow &window, DynamicArray &a)
     return -1;
 }
 
-int sllMenu(sf::RenderWindow &window)
+int sllMenu(sf::RenderWindow &window, SLL &a)
 {
     float wx = window.getSize().x, wy = window.getSize().y;
 
@@ -719,11 +723,6 @@ int sllMenu(sf::RenderWindow &window)
     searchButton.setPosition(searchButtonPos, 4, 4);
     searchButton.setFont(buttonFont);
 
-    // Button runTypeButton("Run type", 24, {150, 50}, sf::Color::Green, sf::Color::White);
-    // sf::Vector2f runTypeButtonPos = {100, 725};
-    // runTypeButton.setPosition(runTypeButtonPos, 5.25, 4);
-    // runTypeButton.setFont(buttonFont);
-
     Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
     sf::Vector2f backButtonPos = {100, 900};
     backButton.setPosition(backButtonPos, 3.25, 4);
@@ -769,11 +768,6 @@ int sllMenu(sf::RenderWindow &window)
                 else
                     searchButton.setFillColor(sf::Color::Green);
 
-                // if (runTypeButton.isMouseOver(window))
-                //     runTypeButton.setFillColor(sf::Color(163, 239, 247, 255));
-                // else
-                //     runTypeButton.setFillColor(sf::Color::Green);
-
                 if (backButton.isMouseOver(window))
                     backButton.setFillColor(sf::Color(163, 239, 247, 255));
                 else
@@ -784,28 +778,29 @@ int sllMenu(sf::RenderWindow &window)
             {
                 if (initButton.isMouseOver(window))
                 {
+                    runSLLInitMenu(window, a);
+
                 }
 
                 if (addButton.isMouseOver(window))
                 {
+                    runSLLAddMenu(window, a);
                 }
 
                 if (deleteButton.isMouseOver(window))
                 {
+                    runSLLDeleteMenu(window, a);
                 }
 
                 if (updateButton.isMouseOver(window))
                 {
+                    runSLLUpdateMenu(window, a);
                 }
 
                 if (searchButton.isMouseOver(window))
                 {
+                    runSLLSearchMenu(window, a);
                 }
-
-                // if (runTypeButton.isMouseOver(window))
-                // {
-
-                // }
 
                 if (backButton.isMouseOver(window))
                 {
@@ -822,16 +817,108 @@ int sllMenu(sf::RenderWindow &window)
         deleteButton.draw(window);
         updateButton.draw(window);
         searchButton.draw(window);
-        // runTypeButton.draw(window);
         backButton.draw(window);
         header.draw(window);
         author.draw(window);
+        a.draw(window);
         window.display();
     }
     return -1;
 }
 
-int dllMenu(sf::RenderWindow &window)
+int sllInitMenu(sf::RenderWindow &window, SLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    sf::Font textBoxFont, buttonFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    buttonFont.loadFromFile(ROBOTO_BOLD);
+
+    Header header(wx, wy, "Singly Linked List", 3.56, 20);
+    Author author(wx, wy);
+
+    Button randomButton("Random", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f randomButtonPos = {100, 525};
+    randomButton.setPosition(randomButtonPos, 5, 4);
+    randomButton.setFont(buttonFont);
+
+    Button userDefineButton("User Define", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f userDefineButtonPos = {100, 600};
+    userDefineButton.setPosition(userDefineButtonPos, 11.5, 4);
+    userDefineButton.setFont(buttonFont);
+
+    Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f backButtonPos = {100, 675};
+    backButton.setPosition(backButtonPos, 3.25, 4);
+    backButton.setFont(buttonFont);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::MouseMoved:
+            {
+                if (randomButton.isMouseOver(window))
+                    randomButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    randomButton.setFillColor(sf::Color::Green);
+
+                if (userDefineButton.isMouseOver(window))
+                    userDefineButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    userDefineButton.setFillColor(sf::Color::Green);
+
+                if (backButton.isMouseOver(window))
+                    backButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    backButton.setFillColor(sf::Color::Green);
+
+                break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (randomButton.isMouseOver(window))
+                {
+                    a.randomInit();
+                }
+
+                if (userDefineButton.isMouseOver(window))
+                {
+                    runSLLInitUserDefineMenu(window, a);
+                }
+
+                if (backButton.isMouseOver(window))
+                {
+                    return 0;
+                }
+
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        randomButton.draw(window);
+        userDefineButton.draw(window);
+        backButton.draw(window);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        window.display();
+    }
+    return -1;
+}
+
+int dllMenu(sf::RenderWindow &window, DLL &a)
 {
     float wx = window.getSize().x, wy = window.getSize().y;
 
@@ -867,11 +954,6 @@ int dllMenu(sf::RenderWindow &window)
     searchButton.setPosition(searchButtonPos, 4, 4);
     searchButton.setFont(buttonFont);
 
-    // Button runTypeButton("Run type", 24, {150, 50}, sf::Color::Green, sf::Color::White);
-    // sf::Vector2f runTypeButtonPos = {100, 725};
-    // runTypeButton.setPosition(runTypeButtonPos, 5.25, 4);
-    // runTypeButton.setFont(buttonFont);
-
     Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
     sf::Vector2f backButtonPos = {100, 900};
     backButton.setPosition(backButtonPos, 3.25, 4);
@@ -917,11 +999,6 @@ int dllMenu(sf::RenderWindow &window)
                 else
                     searchButton.setFillColor(sf::Color::Green);
 
-                // if (runTypeButton.isMouseOver(window))
-                //     runTypeButton.setFillColor(sf::Color(163, 239, 247, 255));
-                // else
-                //     runTypeButton.setFillColor(sf::Color::Green);
-
                 if (backButton.isMouseOver(window))
                     backButton.setFillColor(sf::Color(163, 239, 247, 255));
                 else
@@ -932,28 +1009,28 @@ int dllMenu(sf::RenderWindow &window)
             {
                 if (initButton.isMouseOver(window))
                 {
+                    runDLLInitMenu(window, a);
                 }
 
                 if (addButton.isMouseOver(window))
                 {
+                    runDLLAddMenu(window, a);
                 }
 
                 if (deleteButton.isMouseOver(window))
                 {
+                    runDLLDeleteMenu(window, a);
                 }
 
                 if (updateButton.isMouseOver(window))
                 {
+                    runDLLUpdateMenu(window, a);
                 }
 
                 if (searchButton.isMouseOver(window))
                 {
+                    runDLLSearchMenu(window, a);
                 }
-
-                // if (runTypeButton.isMouseOver(window))
-                // {
-
-                // }
 
                 if (backButton.isMouseOver(window))
                 {
@@ -970,16 +1047,108 @@ int dllMenu(sf::RenderWindow &window)
         deleteButton.draw(window);
         updateButton.draw(window);
         searchButton.draw(window);
-        // runTypeButton.draw(window);
         backButton.draw(window);
         header.draw(window);
         author.draw(window);
+        a.draw(window);
         window.display();
     }
     return -1;
 }
 
-int cllMenu(sf::RenderWindow &window)
+int dllInitMenu(sf::RenderWindow &window, DLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    sf::Font textBoxFont, buttonFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    buttonFont.loadFromFile(ROBOTO_BOLD);
+
+    Header header(wx, wy, "Doubly Linked List", 3.65, 20);
+    Author author(wx, wy);
+
+    Button randomButton("Random", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f randomButtonPos = {100, 525};
+    randomButton.setPosition(randomButtonPos, 5, 4);
+    randomButton.setFont(buttonFont);
+
+    Button userDefineButton("User Define", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f userDefineButtonPos = {100, 600};
+    userDefineButton.setPosition(userDefineButtonPos, 11.5, 4);
+    userDefineButton.setFont(buttonFont);
+
+    Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f backButtonPos = {100, 675};
+    backButton.setPosition(backButtonPos, 3.25, 4);
+    backButton.setFont(buttonFont);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::MouseMoved:
+            {
+                if (randomButton.isMouseOver(window))
+                    randomButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    randomButton.setFillColor(sf::Color::Green);
+
+                if (userDefineButton.isMouseOver(window))
+                    userDefineButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    userDefineButton.setFillColor(sf::Color::Green);
+
+                if (backButton.isMouseOver(window))
+                    backButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    backButton.setFillColor(sf::Color::Green);
+
+                break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (randomButton.isMouseOver(window))
+                {
+                    a.randomInit();
+                }
+
+                if (userDefineButton.isMouseOver(window))
+                {
+                    runDLLInitUserDefineMenu(window, a);
+                }
+
+                if (backButton.isMouseOver(window))
+                {
+                    return 0;
+                }
+
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        randomButton.draw(window);
+        userDefineButton.draw(window);
+        backButton.draw(window);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        window.display();
+    }
+    return -1;
+}
+
+int cllMenu(sf::RenderWindow &window, CLL &a)
 {
     float wx = window.getSize().x, wy = window.getSize().y;
 
@@ -1015,11 +1184,6 @@ int cllMenu(sf::RenderWindow &window)
     searchButton.setPosition(searchButtonPos, 4, 4);
     searchButton.setFont(buttonFont);
 
-    // Button runTypeButton("Run type", 24, {150, 50}, sf::Color::Green, sf::Color::White);
-    // sf::Vector2f runTypeButtonPos = {100, 725};
-    // runTypeButton.setPosition(runTypeButtonPos, 5.25, 4);
-    // runTypeButton.setFont(buttonFont);
-
     Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
     sf::Vector2f backButtonPos = {100, 900};
     backButton.setPosition(backButtonPos, 3.25, 4);
@@ -1065,11 +1229,6 @@ int cllMenu(sf::RenderWindow &window)
                 else
                     searchButton.setFillColor(sf::Color::Green);
 
-                // if (runTypeButton.isMouseOver(window))
-                //     runTypeButton.setFillColor(sf::Color(163, 239, 247, 255));
-                // else
-                //     runTypeButton.setFillColor(sf::Color::Green);
-
                 if (backButton.isMouseOver(window))
                     backButton.setFillColor(sf::Color(163, 239, 247, 255));
                 else
@@ -1080,28 +1239,28 @@ int cllMenu(sf::RenderWindow &window)
             {
                 if (initButton.isMouseOver(window))
                 {
+                    runCLLInitMenu(window, a);
                 }
 
                 if (addButton.isMouseOver(window))
                 {
+                    runCLLAddMenu(window, a);
                 }
 
                 if (deleteButton.isMouseOver(window))
                 {
+                    runCLLDeleteMenu(window, a);
                 }
 
                 if (updateButton.isMouseOver(window))
                 {
+                    runCLLUpdateMenu(window, a);
                 }
 
                 if (searchButton.isMouseOver(window))
                 {
+                    runCLLSearchMenu(window, a);
                 }
-
-                // if (runTypeButton.isMouseOver(window))
-                // {
-
-                // }
 
                 if (backButton.isMouseOver(window))
                 {
@@ -1118,16 +1277,108 @@ int cllMenu(sf::RenderWindow &window)
         deleteButton.draw(window);
         updateButton.draw(window);
         searchButton.draw(window);
-        // runTypeButton.draw(window);
         backButton.draw(window);
         header.draw(window);
         author.draw(window);
+        a.draw(window);
         window.display();
     }
     return -1;
 }
 
-int stackMenu(sf::RenderWindow &window)
+int cllInitMenu(sf::RenderWindow &window, CLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    sf::Font textBoxFont, buttonFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    buttonFont.loadFromFile(ROBOTO_BOLD);
+
+    Header header(wx, wy, "Circular Linked List", 3.825, 20);
+    Author author(wx, wy);
+
+    Button randomButton("Random", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f randomButtonPos = {100, 525};
+    randomButton.setPosition(randomButtonPos, 5, 4);
+    randomButton.setFont(buttonFont);
+
+    Button userDefineButton("User Define", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f userDefineButtonPos = {100, 600};
+    userDefineButton.setPosition(userDefineButtonPos, 11.5, 4);
+    userDefineButton.setFont(buttonFont);
+
+    Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f backButtonPos = {100, 675};
+    backButton.setPosition(backButtonPos, 3.25, 4);
+    backButton.setFont(buttonFont);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::MouseMoved:
+            {
+                if (randomButton.isMouseOver(window))
+                    randomButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    randomButton.setFillColor(sf::Color::Green);
+
+                if (userDefineButton.isMouseOver(window))
+                    userDefineButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    userDefineButton.setFillColor(sf::Color::Green);
+
+                if (backButton.isMouseOver(window))
+                    backButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    backButton.setFillColor(sf::Color::Green);
+
+                break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (randomButton.isMouseOver(window))
+                {
+                    a.randomInit();
+                }
+
+                if (userDefineButton.isMouseOver(window))
+                {
+                    runCLLInitUserDefineMenu(window, a);
+                }
+
+                if (backButton.isMouseOver(window))
+                {
+                    return 0;
+                }
+
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        randomButton.draw(window);
+        userDefineButton.draw(window);
+        backButton.draw(window);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        window.display();
+    }
+    return -1;
+}
+
+int stackMenu(sf::RenderWindow &window, Stack &a)
 {
     float wx = window.getSize().x, wy = window.getSize().y;
 
@@ -1152,11 +1403,6 @@ int stackMenu(sf::RenderWindow &window)
     sf::Vector2f popButtonPos = {100, 750};
     popButton.setPosition(popButtonPos, 2.85, 4);
     popButton.setFont(buttonFont);
-
-    // Button runTypeButton("Run type", 24, {150, 50}, sf::Color::Green, sf::Color::White);
-    // sf::Vector2f runTypeButtonPos = {100, 725};
-    // runTypeButton.setPosition(runTypeButtonPos, 5.25, 4);
-    // runTypeButton.setFont(buttonFont);
 
     Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
     sf::Vector2f backButtonPos = {100, 825};
@@ -1193,11 +1439,6 @@ int stackMenu(sf::RenderWindow &window)
                 else
                     popButton.setFillColor(sf::Color::Green);
 
-                // if (runTypeButton.isMouseOver(window))
-                //     runTypeButton.setFillColor(sf::Color(163, 239, 247, 255));
-                // else
-                //     runTypeButton.setFillColor(sf::Color::Green);
-
                 if (backButton.isMouseOver(window))
                     backButton.setFillColor(sf::Color(163, 239, 247, 255));
                 else
@@ -1208,20 +1449,18 @@ int stackMenu(sf::RenderWindow &window)
             {
                 if (initButton.isMouseOver(window))
                 {
+                    runStackInitMenu(window, a);
                 }
 
                 if (pushButton.isMouseOver(window))
                 {
+                    runStackPushMenu(window, a);
                 }
 
                 if (popButton.isMouseOver(window))
                 {
+                    a.pop(window);
                 }
-
-                // if (runTypeButton.isMouseOver(window))
-                // {
-
-                // }
 
                 if (backButton.isMouseOver(window))
                 {
@@ -1236,16 +1475,108 @@ int stackMenu(sf::RenderWindow &window)
         initButton.draw(window);
         pushButton.draw(window);
         popButton.draw(window);
-        // runTypeButton.draw(window);
         backButton.draw(window);
         header.draw(window);
         author.draw(window);
+        a.draw(window);
         window.display();
     }
     return -1;
 }
 
-int queueMenu(sf::RenderWindow &window)
+int stackInitMenu(sf::RenderWindow &window, Stack &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    sf::Font textBoxFont, buttonFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    buttonFont.loadFromFile(ROBOTO_BOLD);
+
+    Header header(wx, wy, "Stack", 2.35, 20);
+    Author author(wx, wy);
+
+    Button randomButton("Random", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f randomButtonPos = {100, 525};
+    randomButton.setPosition(randomButtonPos, 5, 4);
+    randomButton.setFont(buttonFont);
+
+    Button userDefineButton("User Define", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f userDefineButtonPos = {100, 600};
+    userDefineButton.setPosition(userDefineButtonPos, 11.5, 4);
+    userDefineButton.setFont(buttonFont);
+
+    Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f backButtonPos = {100, 675};
+    backButton.setPosition(backButtonPos, 3.25, 4);
+    backButton.setFont(buttonFont);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::MouseMoved:
+            {
+                if (randomButton.isMouseOver(window))
+                    randomButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    randomButton.setFillColor(sf::Color::Green);
+
+                if (userDefineButton.isMouseOver(window))
+                    userDefineButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    userDefineButton.setFillColor(sf::Color::Green);
+
+                if (backButton.isMouseOver(window))
+                    backButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    backButton.setFillColor(sf::Color::Green);
+
+                break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (randomButton.isMouseOver(window))
+                {
+                    a.randomInit();
+                }
+
+                if (userDefineButton.isMouseOver(window))
+                {
+                    runStackInitUserDefineMenu(window, a);
+                }
+
+                if (backButton.isMouseOver(window))
+                {
+                    return 0;
+                }
+
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        randomButton.draw(window);
+        userDefineButton.draw(window);
+        backButton.draw(window);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        window.display();
+    }
+    return -1;
+}
+
+int queueMenu(sf::RenderWindow &window, Queue &a)
 {
     float wx = window.getSize().x, wy = window.getSize().y;
 
@@ -1270,11 +1601,6 @@ int queueMenu(sf::RenderWindow &window)
     sf::Vector2f dequeueButtonPos = {100, 750};
     dequeueButton.setPosition(dequeueButtonPos, 5, 4);
     dequeueButton.setFont(buttonFont);
-
-    // Button runTypeButton("Run type", 24, {150, 50}, sf::Color::Green, sf::Color::White);
-    // sf::Vector2f runTypeButtonPos = {100, 725};
-    // runTypeButton.setPosition(runTypeButtonPos, 5.25, 4);
-    // runTypeButton.setFont(buttonFont);
 
     Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
     sf::Vector2f backButtonPos = {100, 825};
@@ -1311,11 +1637,6 @@ int queueMenu(sf::RenderWindow &window)
                 else
                     dequeueButton.setFillColor(sf::Color::Green);
 
-                // if (runTypeButton.isMouseOver(window))
-                //     runTypeButton.setFillColor(sf::Color(163, 239, 247, 255));
-                // else
-                //     runTypeButton.setFillColor(sf::Color::Green);
-
                 if (backButton.isMouseOver(window))
                     backButton.setFillColor(sf::Color(163, 239, 247, 255));
                 else
@@ -1326,20 +1647,18 @@ int queueMenu(sf::RenderWindow &window)
             {
                 if (initButton.isMouseOver(window))
                 {
+                    runQueueInitMenu(window, a);
                 }
 
                 if (enqueueButton.isMouseOver(window))
                 {
+                    runQueuePushMenu(window, a);
                 }
 
                 if (dequeueButton.isMouseOver(window))
                 {
+                    a.pop(window);
                 }
-
-                // if (runTypeButton.isMouseOver(window))
-                // {
-
-                // }
 
                 if (backButton.isMouseOver(window))
                 {
@@ -1354,10 +1673,102 @@ int queueMenu(sf::RenderWindow &window)
         initButton.draw(window);
         enqueueButton.draw(window);
         dequeueButton.draw(window);
-        // runTypeButton.draw(window);
         backButton.draw(window);
         header.draw(window);
         author.draw(window);
+        a.draw(window);
+        window.display();
+    }
+    return -1;
+}
+
+int queueInitMenu(sf::RenderWindow &window, Queue &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    sf::Font textBoxFont, buttonFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    buttonFont.loadFromFile(ROBOTO_BOLD);
+
+    Header header(wx, wy, "Queue", 2.35, 20);
+    Author author(wx, wy);
+
+    Button randomButton("Random", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f randomButtonPos = {100, 525};
+    randomButton.setPosition(randomButtonPos, 5, 4);
+    randomButton.setFont(buttonFont);
+
+    Button userDefineButton("User Define", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f userDefineButtonPos = {100, 600};
+    userDefineButton.setPosition(userDefineButtonPos, 11.5, 4);
+    userDefineButton.setFont(buttonFont);
+
+    Button backButton("Back", 24, {150, 50}, sf::Color::Green, sf::Color::White);
+    sf::Vector2f backButtonPos = {100, 675};
+    backButton.setPosition(backButtonPos, 3.25, 4);
+    backButton.setFont(buttonFont);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::MouseMoved:
+            {
+                if (randomButton.isMouseOver(window))
+                    randomButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    randomButton.setFillColor(sf::Color::Green);
+
+                if (userDefineButton.isMouseOver(window))
+                    userDefineButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    userDefineButton.setFillColor(sf::Color::Green);
+
+                if (backButton.isMouseOver(window))
+                    backButton.setFillColor(sf::Color(163, 239, 247, 255));
+                else
+                    backButton.setFillColor(sf::Color::Green);
+
+                break;
+            }
+            case sf::Event::MouseButtonPressed:
+            {
+                if (randomButton.isMouseOver(window))
+                {
+                    a.randomInit();
+                }
+
+                if (userDefineButton.isMouseOver(window))
+                {
+                    runQueueInitUserDefineMenu(window, a);
+                }
+
+                if (backButton.isMouseOver(window))
+                {
+                    return 0;
+                }
+
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        randomButton.draw(window);
+        userDefineButton.draw(window);
+        backButton.draw(window);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
         window.display();
     }
     return -1;
@@ -1427,27 +1838,32 @@ void runLLMenu(sf::RenderWindow &window)
     {
     case 0:
     {
-        runSLLMenu(window);
+        SLL a(0);
+        runSLLMenu(window, a);
         break;
     }
     case 1:
     {
-        runDLLMenu(window);
+        DLL a(0);
+        runDLLMenu(window, a);
         break;
     }
     case 2:
     {
-        runCLLMenu(window);
+        CLL a(0);
+        runCLLMenu(window, a);
         break;
     }
     case 3:
     {
-        runStackMenu(window);
+        Stack a(0);
+        runStackMenu(window, a);
         break;
     }
     case 4:
     {
-        runQueueMenu(window);
+        Queue a(0);
+        runQueueMenu(window, a);
         break;
     }
     default:
@@ -2411,67 +2827,1774 @@ void runDynamicArraySearchMenu(sf::RenderWindow &window, DynamicArray &a)
     }
 }
 
-void runSLLMenu(sf::RenderWindow &window)
+void runSLLMenu(sf::RenderWindow &window, SLL &a)
 {
-    int k = sllMenu(window);
-    switch (k)
-    {
-    case 1:
-    case 2:
+    int k = sllMenu(window, a);
+    runLLMenu(window);
+}
 
-    default:
-        runLLMenu(window);
+void runSLLInitMenu(sf::RenderWindow &window, SLL &a)
+{
+    int k = sllInitMenu(window, a);
+    runSLLMenu(window, a);
+}
+
+void runSLLInitUserDefineMenu(sf::RenderWindow &window, SLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Singly Linked List", 3.56, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {600, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int n = 0, i = 0;
+    int *b = nullptr;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (n == 0)
+            {
+                n = toNumber(initTextBox.getText());
+                if (n == 0 || n > 10)
+                {
+                    if (n == 0)
+                        a.userDefineInit(n, b);
+                    return;
+                }
+                b = new int[n];
+            }
+            else
+            {
+                b[i++] = toNumber((initTextBox.getText() == "" ? "0" : initTextBox.getText()));
+                if (i >= n)
+                {
+                    a.userDefineInit(n, b);
+                    delete[] b;
+
+                    return;
+                }
+            }
+            std::string tmp = "Input MyLinkedList[";
+            tmp += toString(i);
+            tmp += "]:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {355, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        initTextBox.draw(window);
+        window.display();
     }
 }
 
-void runDLLMenu(sf::RenderWindow &window)
+void runSLLAddMenu(sf::RenderWindow &window, SLL &a)
 {
-    int k = dllMenu(window);
-    switch (k)
-    {
-    case 1:
-    case 2:
+    float wx = window.getSize().x, wy = window.getSize().y;
 
-    default:
-        runLLMenu(window);
+    Header header(wx, wy, "Singly Linked List", 3.56, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize());
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 10)
+        {
+            message.setString("MyLinkedList has reached limit");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos > a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.addValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (a.getSize() < 10)
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 10)
+        {
+            Sleep(2000);
+            return;
+        }
     }
 }
 
-void runCLLMenu(sf::RenderWindow &window)
+void runSLLDeleteMenu(sf::RenderWindow &window, SLL &a)
 {
-    int k = cllMenu(window);
-    switch (k)
-    {
-    case 1:
-    case 2:
+    float wx = window.getSize().x, wy = window.getSize().y;
 
-    default:
-        runLLMenu(window);
+    Header header(wx, wy, "Singly Linked List", 3.56, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                a.deleteValueAtPosition(pos, window);
+
+                return;
+            }
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+        {
+            initTextBox.draw(window);
+        }
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
     }
 }
 
-void runStackMenu(sf::RenderWindow &window)
+void runSLLUpdateMenu(sf::RenderWindow &window, SLL &a)
 {
-    int k = stackMenu(window);
-    switch (k)
-    {
-    case 1:
-    case 2:
+    float wx = window.getSize().x, wy = window.getSize().y;
 
-    default:
-        runLLMenu(window);
+    Header header(wx, wy, "Singly Linked List", 3.56, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.updateValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
     }
 }
 
-void runQueueMenu(sf::RenderWindow &window)
+void runSLLSearchMenu(sf::RenderWindow &window, SLL &a)
 {
-    int k = queueMenu(window);
-    switch (k)
-    {
-    case 1:
-    case 2:
+    float wx = window.getSize().x, wy = window.getSize().y;
 
-    default:
-        runLLMenu(window);
+    Header header(wx, wy, "Singly Linked List", 3.56, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input value:";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {230, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            x = toNumber(initTextBox.getText());
+            a.searchValue(x, window);
+
+            return;
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDLLMenu(sf::RenderWindow &window, DLL &a)
+{
+    int k = dllMenu(window, a);
+    runLLMenu(window);
+}
+
+void runDLLInitMenu(sf::RenderWindow &window, DLL &a)
+{
+    int k = dllInitMenu(window, a);
+    runDLLMenu(window, a);
+}
+
+void runDLLInitUserDefineMenu(sf::RenderWindow &window, DLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Doubly Linked List", 3.625, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {600, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int n = 0, i = 0;
+    int *b = nullptr;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (n == 0)
+            {
+                n = toNumber(initTextBox.getText());
+                if (n == 0 || n > 10)
+                {
+                    if (n == 0)
+                        a.userDefineInit(n, b);
+                    return;
+                }
+                b = new int[n];
+            }
+            else
+            {
+                b[i++] = toNumber((initTextBox.getText() == "" ? "0" : initTextBox.getText()));
+                if (i >= n)
+                {
+                    a.userDefineInit(n, b);
+                    delete[] b;
+
+                    return;
+                }
+            }
+            std::string tmp = "Input MyLinkedList[";
+            tmp += toString(i);
+            tmp += "]:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {355, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        initTextBox.draw(window);
+        window.display();
+    }
+}
+
+void runDLLAddMenu(sf::RenderWindow &window, DLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Doubly Linked List", 3.625, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize());
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 10)
+        {
+            message.setString("MyLinkedList has reached limit");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos > a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.addValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (a.getSize() < 10)
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 10)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDLLDeleteMenu(sf::RenderWindow &window, DLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Doubly Linked List", 3.625, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                a.deleteValueAtPosition(pos, window);
+
+                return;
+            }
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+        {
+            initTextBox.draw(window);
+        }
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDLLUpdateMenu(sf::RenderWindow &window, DLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Doubly Linked List", 3.625, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.updateValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runDLLSearchMenu(sf::RenderWindow &window, DLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Doubly Linked List", 3.625, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input value:";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {230, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            x = toNumber(initTextBox.getText());
+            a.searchValue(x, window);
+
+            return;
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runCLLMenu(sf::RenderWindow &window, CLL &a)
+{
+    int k = cllMenu(window, a);
+    runLLMenu(window);
+}
+
+void runCLLInitMenu(sf::RenderWindow &window, CLL &a)
+{
+    int k = cllInitMenu(window, a);
+    runCLLMenu(window, a);
+}
+
+void runCLLInitUserDefineMenu(sf::RenderWindow &window, CLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Circular Linked List", 3.825, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    message.setString("Input SLL size (integer number from 0 to 9): ");
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {590, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int n = 0, i = 0;
+    int *b = nullptr;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (n == 0)
+            {
+                n = toNumber(initTextBox.getText());
+                if (n == 0 || n > 9)
+                {
+                    if (n == 0)
+                        a.userDefineInit(n, b);
+                    return;
+                }
+                b = new int[n];
+            }
+            else
+            {
+                b[i++] = toNumber((initTextBox.getText() == "" ? "0" : initTextBox.getText()));
+                if (i >= n)
+                {
+                    a.userDefineInit(n, b);
+                    delete[] b;
+
+                    return;
+                }
+            }
+            std::string tmp = "Input MyLinkedList[";
+            tmp += toString(i);
+            tmp += "]:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {355, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        initTextBox.draw(window);
+        window.display();
+    }
+}
+
+void runCLLAddMenu(sf::RenderWindow &window, CLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Circular Linked List", 3.825, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize());
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 9)
+        {
+            message.setString("MyLinkedList has reached limit");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos > a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.addValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (a.getSize() < 9)
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 9)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runCLLDeleteMenu(sf::RenderWindow &window, CLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Circular Linked List", 3.825, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                a.deleteValueAtPosition(pos, window);
+
+                return;
+            }
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+        {
+            initTextBox.draw(window);
+        }
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runCLLUpdateMenu(sf::RenderWindow &window, CLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Circular Linked List", 3.825, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input position (integer number from 0 to ";
+    messageText += toString(a.getSize() - 1);
+    messageText += "):";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {580, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int pos = 10, x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (pos == 10)
+            {
+                pos = toNumber(initTextBox.getText());
+                if (pos >= a.getSize())
+                    return;
+            }
+            else
+            {
+                x = toNumber(initTextBox.getText());
+                a.updateValueAtPosition(pos, x, window);
+
+                return;
+            }
+            std::string tmp = "Input value:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {230, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runCLLSearchMenu(sf::RenderWindow &window, CLL &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Circular Linked List", 3.825, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input value:";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {230, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 0)
+        {
+            message.setString("MyLinkedList is empty");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            x = toNumber(initTextBox.getText());
+            a.searchValue(x, window);
+
+            return;
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (0 < a.getSize())
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 0)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runStackMenu(sf::RenderWindow &window, Stack &a)
+{
+    int k = stackMenu(window, a);
+    runLLMenu(window);
+}
+
+void runStackInitMenu(sf::RenderWindow &window, Stack &a)
+{
+    int k = stackInitMenu(window, a);
+    runStackMenu(window, a);
+}
+
+void runStackInitUserDefineMenu(sf::RenderWindow &window, Stack &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Stack", 2.35, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {600, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int n = 0, i = 0;
+    int *b = nullptr;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (n == 0)
+            {
+                n = toNumber(initTextBox.getText());
+                if (n == 0 || n > 10)
+                {
+                    if (n == 0)
+                        a.userDefineInit(n, b);
+                    return;
+                }
+                b = new int[n];
+            }
+            else
+            {
+                b[i++] = toNumber((initTextBox.getText() == "" ? "0" : initTextBox.getText()));
+                if (i >= n)
+                {
+                    a.userDefineInit(n, b);
+                    delete[] b;
+
+                    return;
+                }
+            }
+            std::string tmp = "Input MyStack[";
+            tmp += toString(i);
+            tmp += "]:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {300, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        initTextBox.draw(window);
+        window.display();
+    }
+}
+
+void runStackPushMenu(sf::RenderWindow &window, Stack &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Stack", 2.35, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input value:";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {230, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 10)
+        {
+            message.setString("MyStack has reached limit");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            x = toNumber(initTextBox.getText());
+            a.push(x, window);
+
+            return;
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (a.getSize() < 10)
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 10)
+        {
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
+void runQueueMenu(sf::RenderWindow &window, Queue &a)
+{
+    int k = queueMenu(window, a);
+    runLLMenu(window);
+}
+
+void runQueueInitMenu(sf::RenderWindow &window, Queue &a)
+{
+    int k = queueInitMenu(window, a);
+    runQueueMenu(window, a);
+}
+
+void runQueueInitUserDefineMenu(sf::RenderWindow &window, Queue &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Queue", 2.35, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {600, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int n = 0, i = 0;
+    int *b = nullptr;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            if (n == 0)
+            {
+                n = toNumber(initTextBox.getText());
+                if (n == 0 || n > 10)
+                {
+                    if (n == 0)
+                        a.userDefineInit(n, b);
+                    return;
+                }
+                b = new int[n];
+            }
+            else
+            {
+                b[i++] = toNumber((initTextBox.getText() == "" ? "0" : initTextBox.getText()));
+                if (i >= n)
+                {
+                    a.userDefineInit(n, b);
+                    delete[] b;
+
+                    return;
+                }
+            }
+            std::string tmp = "Input MyQueue[";
+            tmp += toString(i);
+            tmp += "]:";
+            message.setString(tmp);
+
+            initTextBox.clear();
+            initTextBoxPos = {305, 475};
+            initTextBox.setPosition(initTextBoxPos);
+
+            Sleep(150);
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        initTextBox.draw(window);
+        window.display();
+    }
+}
+
+void runQueuePushMenu(sf::RenderWindow &window, Queue &a)
+{
+    float wx = window.getSize().x, wy = window.getSize().y;
+
+    Header header(wx, wy, "Queue", 2.35, 20);
+    Author author(wx, wy);
+
+    sf::Font textBoxFont, messageFont;
+    textBoxFont.loadFromFile(ROBOTO);
+    messageFont.loadFromFile(ROBOTO_BOLD);
+
+    sf::Text message;
+    std::string messageText = "Input value:";
+    message.setString(messageText);
+    message.setFont(messageFont);
+    message.setCharacterSize(24);
+    message.setPosition({100, 475});
+    message.setFillColor(sf::Color::Black);
+
+    TextBox initTextBox(24, sf::Color::Black, true);
+    initTextBox.setFont(textBoxFont);
+    sf::Vector2f initTextBoxPos = {230, 475};
+    initTextBox.setPosition(initTextBoxPos);
+    initTextBox.setLimit(true, 2);
+
+    int x;
+
+    while (window.isOpen())
+    {
+        if (a.getSize() == 10)
+        {
+            message.setString("MyQueue has reached limit");
+        }
+
+        sf::Event event;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        {
+            x = toNumber(initTextBox.getText());
+            a.push(x, window);
+
+            return;
+        }
+
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+
+                break;
+            }
+            case sf::Event::TextEntered:
+            {
+                initTextBox.typedOn(event);
+                break;
+            }
+            }
+        }
+        window.clear(sf::Color::White);
+        window.draw(message);
+        header.draw(window);
+        author.draw(window);
+        a.draw(window);
+        if (a.getSize() < 10)
+            initTextBox.draw(window);
+        window.display();
+
+        if (a.getSize() == 10)
+        {
+            Sleep(2000);
+            return;
+        }
     }
 }

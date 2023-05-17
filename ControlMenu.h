@@ -1,7 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include "StaticArray.h"
 #include "DynamicArray.h"
-
+#include "SLL.h"
+#include "DLL.h"
+#include "CLL.h"
+#include "Stack.h"
+#include "Queue.h"
 #ifndef _Control_Menu_h_
 #define _Control_Menu_h
 
@@ -21,15 +25,25 @@ int dynamicArrayMenu(sf::RenderWindow &window, DynamicArray &a);
 
 int dynamicArrayInitMenu(sf::RenderWindow &window, DynamicArray &a);
 
-int sllMenu(sf::RenderWindow &window);
+int sllMenu(sf::RenderWindow &window, SLL &a);
 
-int dllMenu(sf::RenderWindow &window);
+int sllInitMenu(sf::RenderWindow &window, SLL &a);
 
-int cllMenu(sf::RenderWindow &window);
+int dllMenu(sf::RenderWindow &window, DLL &a);
 
-int stackMenu(sf::RenderWindow &window);
+int dllInitMenu(sf::RenderWindow &window, DLL &a);
 
-int queueMenu(sf::RenderWindow &window);
+int cllMenu(sf::RenderWindow &window, CLL &a);
+
+int cllInitMenu(sf::RenderWindow &window, CLL &a);
+
+int stackMenu(sf::RenderWindow &window, Stack &a);
+
+int stackInitMenu(sf::RenderWindow &window, Stack &a);
+
+int queueMenu(sf::RenderWindow &window, Queue &a);
+
+int queueInitMenu(sf::RenderWindow &window, Queue &a);
 
 void runMainMenu(sf::RenderWindow &window);
 
@@ -67,14 +81,66 @@ void runDynamicArrayUpdateMenu(sf::RenderWindow &window, DynamicArray &a);
 
 void runDynamicArraySearchMenu(sf::RenderWindow &window, DynamicArray &a);
 
-void runSLLMenu(sf::RenderWindow &window);
+void runSLLMenu(sf::RenderWindow &window, SLL &a);
 
-void runDLLMenu(sf::RenderWindow &window);
+void runSLLInitMenu(sf::RenderWindow &window, SLL &a);
 
-void runCLLMenu(sf::RenderWindow &window);
+void runSLLInitUserDefineMenu(sf::RenderWindow &window, SLL &a);
 
-void runStackMenu(sf::RenderWindow &window);
+void runSLLAddMenu(sf::RenderWindow &window, SLL &a);
 
-void runQueueMenu(sf::RenderWindow &window);
+void runSLLDeleteMenu(sf::RenderWindow &window, SLL &a);
+
+void runSLLUpdateMenu(sf::RenderWindow &window, SLL &a);
+
+void runSLLSearchMenu(sf::RenderWindow &window, SLL &a);
+
+void runDLLMenu(sf::RenderWindow &window, DLL &a);
+
+void runDLLInitMenu(sf::RenderWindow &window, DLL &a);
+
+void runDLLInitUserDefineMenu(sf::RenderWindow &window, DLL &a);
+
+void runDLLAddMenu(sf::RenderWindow &window, DLL &a);
+
+void runDLLDeleteMenu(sf::RenderWindow &window, DLL &a);
+
+void runDLLUpdateMenu(sf::RenderWindow &window, DLL &a);
+
+void runDLLSearchMenu(sf::RenderWindow &window, DLL &a);
+
+void runCLLMenu(sf::RenderWindow &window, CLL &a);
+
+void runCLLInitMenu(sf::RenderWindow &window, CLL &a);
+
+void runCLLInitUserDefineMenu(sf::RenderWindow &window, CLL &a);
+
+void runCLLAddMenu(sf::RenderWindow &window, CLL &a);
+
+void runCLLDeleteMenu(sf::RenderWindow &window, CLL &a);
+
+void runCLLUpdateMenu(sf::RenderWindow &window, CLL &a);
+
+void runCLLSearchMenu(sf::RenderWindow &window, CLL &a);
+
+void runStackMenu(sf::RenderWindow &window, Stack &a);
+
+void runStackInitMenu(sf::RenderWindow &window, Stack &a);
+
+void runStackInitUserDefineMenu(sf::RenderWindow &window, Stack &a);
+
+void runStackPushMenu(sf::RenderWindow &window, Stack &a);
+
+void runStackPopMenu(sf::RenderWindow &window, Stack &a);
+
+void runQueueMenu(sf::RenderWindow &window, Queue &a);
+
+void runQueueInitMenu(sf::RenderWindow &window, Queue &a);
+
+void runQueueInitUserDefineMenu(sf::RenderWindow &window, Queue &a);
+
+void runQueuePushMenu(sf::RenderWindow &window, Queue &a);
+
+void runQueuePopMenu(sf::RenderWindow &window, Queue &a);
 
 #endif
