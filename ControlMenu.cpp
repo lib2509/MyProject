@@ -2472,11 +2472,11 @@ void runDynamicArrayAddMenu(sf::RenderWindow &window, DynamicArray &a)
     initTextBox.setLimit(true, 2);
 
     sf::Text newArrName;
-    newArrName.setString("NewArray");
+    newArrName.setString("NewArray*");
     newArrName.setFont(messageFont);
     newArrName.setCharacterSize(30);
     newArrName.setFillColor(sf::Color::Black);
-    newArrName.setPosition({150, 585});
+    newArrName.setPosition({140, 585});
 
     int pos = 10, x;
 
@@ -2582,11 +2582,11 @@ void runDynamicArrayDeleteMenu(sf::RenderWindow &window, DynamicArray &a)
     initTextBox.setLimit(true, 2);
 
     sf::Text newArrName;
-    newArrName.setString("NewArray");
+    newArrName.setString("NewArray*");
     newArrName.setFont(messageFont);
     newArrName.setCharacterSize(30);
     newArrName.setFillColor(sf::Color::Black);
-    newArrName.setPosition({150, 585});
+    newArrName.setPosition({140, 585});
 
     int pos = 10, x;
 
@@ -3319,7 +3319,7 @@ void runDLLInitUserDefineMenu(sf::RenderWindow &window, DLL &a)
     messageFont.loadFromFile(ROBOTO_BOLD);
 
     sf::Text message;
-    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setString("Input DLL size (integer number from 0 to 10): ");
     message.setFont(messageFont);
     message.setCharacterSize(24);
     message.setPosition({100, 475});
@@ -3787,7 +3787,7 @@ void runCLLInitUserDefineMenu(sf::RenderWindow &window, CLL &a)
     messageFont.loadFromFile(ROBOTO_BOLD);
 
     sf::Text message;
-    message.setString("Input SLL size (integer number from 0 to 9): ");
+    message.setString("Input CLL size (integer number from 0 to 9): ");
     message.setFont(messageFont);
     message.setCharacterSize(24);
     message.setPosition({100, 475});
@@ -4255,7 +4255,7 @@ void runStackInitUserDefineMenu(sf::RenderWindow &window, Stack &a)
     messageFont.loadFromFile(ROBOTO_BOLD);
 
     sf::Text message;
-    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setString("Input stack size (integer number from 0 to 10): ");
     message.setFont(messageFont);
     message.setCharacterSize(24);
     message.setPosition({100, 475});
@@ -4263,7 +4263,7 @@ void runStackInitUserDefineMenu(sf::RenderWindow &window, Stack &a)
 
     TextBox initTextBox(24, sf::Color::Black, true);
     initTextBox.setFont(textBoxFont);
-    sf::Vector2f initTextBoxPos = {600, 475};
+    sf::Vector2f initTextBoxPos = {620, 475};
     initTextBox.setPosition(initTextBoxPos);
     initTextBox.setLimit(true, 2);
 
@@ -4439,7 +4439,7 @@ void runQueueInitUserDefineMenu(sf::RenderWindow &window, Queue &a)
     messageFont.loadFromFile(ROBOTO_BOLD);
 
     sf::Text message;
-    message.setString("Input SLL size (integer number from 0 to 10): ");
+    message.setString("Input queue size (integer number from 0 to 10): ");
     message.setFont(messageFont);
     message.setCharacterSize(24);
     message.setPosition({100, 475});
@@ -4447,7 +4447,7 @@ void runQueueInitUserDefineMenu(sf::RenderWindow &window, Queue &a)
 
     TextBox initTextBox(24, sf::Color::Black, true);
     initTextBox.setFont(textBoxFont);
-    sf::Vector2f initTextBoxPos = {600, 475};
+    sf::Vector2f initTextBoxPos = {625, 475};
     initTextBox.setPosition(initTextBoxPos);
     initTextBox.setLimit(true, 2);
 
