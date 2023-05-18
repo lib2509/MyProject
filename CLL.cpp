@@ -32,7 +32,7 @@ void CLL::randomInit()
     clear();
 
     srand(time(NULL));
-    int n = 1 + rand() % 10;
+    int n = 1 + rand() % maxLLSize;
     int *a = new int[n];
     for (int i = 0; i < n; i++)
         a[i] = rand() % 100;
